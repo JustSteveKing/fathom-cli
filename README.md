@@ -1,36 +1,37 @@
-<p align="center">
-    <img title="Laravel Zero" height="100" src="https://raw.githubusercontent.com/laravel-zero/docs/master/images/logo/laravel-zero-readme.png" />
-</p>
+# Fathom CLI
 
-<p align="center">
-  <a href="https://github.com/laravel-zero/framework/actions"><img src="https://img.shields.io/github/workflow/status/laravel-zero/framework/Tests.svg" alt="Build Status"></img></a>
-  <a href="https://packagist.org/packages/laravel-zero/framework"><img src="https://img.shields.io/packagist/dt/laravel-zero/framework.svg" alt="Total Downloads"></a>
-  <a href="https://packagist.org/packages/laravel-zero/framework"><img src="https://img.shields.io/packagist/v/laravel-zero/framework.svg?label=stable" alt="Latest Stable Version"></a>
-  <a href="https://packagist.org/packages/laravel-zero/framework"><img src="https://img.shields.io/packagist/l/laravel-zero/framework.svg" alt="License"></a>
-</p>
+An opinionated CLI for working with the usefathom API.
 
-<h4> <center>This is a <bold>community project</bold> and not an official Laravel one </center></h4>
+## Installation
 
-Laravel Zero was created by, and is maintained by [Nuno Maduro](https://github.com/nunomaduro), and is a micro-framework that provides an elegant starting point for your console application. It is an **unofficial** and customized version of Laravel optimized for building command-line applications.
+Fathom CLi can easily be installed using composer, the easiest way is to install this globally as a composer dependency:
 
-- Built on top of the [Laravel](https://laravel.com) components.
-- Optional installation of Laravel [Eloquent](https://laravel-zero.com/docs/database/), Laravel [Logging](https://laravel-zero.com/docs/logging/) and many others.
-- Supports interactive [menus](https://laravel-zero.com/docs/build-interactive-menus/) and [desktop notifications](https://laravel-zero.com/docs/send-desktop-notifications/) on Linux, Windows & MacOS.
-- Ships with a [Scheduler](https://laravel-zero.com/docs/task-scheduling/) and  a [Standalone Compiler](https://laravel-zero.com/docs/build-a-standalone-application/).
-- Integration with [Collision](https://github.com/nunomaduro/collision) - Beautiful error reporting
+```bash
+composer global require juststeveking/fathom-cli
+```
 
-------
+You are now ready to check your site stats or set up a local project with a `fathom.yml` file.
 
-## Documentation
+## Usage
 
-For full documentation, visit [laravel-zero.com](https://laravel-zero.com/).
+### Setting up globally
 
-## Support the development
-**Do you like this project? Support it by donating**
+To set the Fathom CLI up globally, you need to have an API key ready, then run:
 
-- PayPal: [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L)
-- Patreon: [Donate](https://www.patreon.com/nunomaduro)
+```bash
+fathom setup
+```
 
-## License
+This will ask you for your fathom API token, which will be stored `~/.fathom/config.php`
 
-Laravel Zero is an open-source software licensed under the MIT license.
+
+### Setting up locally in a project
+
+To set up a project locally first you need to have a `fathom.yml` file in the root of your project directory. The init command will link the current working directory with a site on Fathom.
+
+When calling `fathom init`, you can choose from an interactive list, which site you want to link the project to.
+
+// add image here
+
+After selecting the site, you can now go ahead and call the site commands. You are able to safely store this configuration file in version control to sync later on if need be. It will only contain a working path to you project locally and the site ID from fathom. The API token never leaves your local file system.
+
