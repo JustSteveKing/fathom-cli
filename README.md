@@ -1,5 +1,7 @@
 # Fathom CLI
 
+[![Tests](https://github.com/JustSteveKing/fathom-cli/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/JustSteveKing/fathom-cli/actions/workflows/run-tests.yml)
+
 An opinionated CLI for working with the usefathom API.
 
 ## Installation
