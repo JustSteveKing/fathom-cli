@@ -1,3 +1,9 @@
 <?php
 
-uses(Tests\TestCase::class)->in('Feature');
+use Tests\TestCase;
+use Tests\CreatesApplication;
+
+uses(TestCase::class, CreatesApplication::class)
+    ->beforeEach(function () {
+        //
+    })->in('Feature', 'Unit');

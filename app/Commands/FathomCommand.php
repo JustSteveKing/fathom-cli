@@ -6,10 +6,14 @@ namespace App\Commands;
 
 use App\Commands\Concerns\HasToken;
 use App\Commands\Concerns\HasFathomConfig;
+use App\Repositories\ConfigRepository;
 use LaravelZero\Framework\Commands\Command;
 
 abstract class FathomCommand extends Command
 {
-    use HasToken;
-    use HasFathomConfig;
+    public function __construct(
+        protected ConfigRepository $config,
+    ) {
+        parent::__construct();
+    }
 }

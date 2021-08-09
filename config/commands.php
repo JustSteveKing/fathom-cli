@@ -55,11 +55,30 @@ return [
     */
 
     'hidden' => [
-        NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
-        Symfony\Component\Console\Command\HelpCommand::class,
+        // Illuminate...
         Illuminate\Console\Scheduling\ScheduleRunCommand::class,
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         Illuminate\Foundation\Console\VendorPublishCommand::class,
+        Illuminate\Foundation\Console\VendorPublishCommand::class,
+
+        // Laravel Zero...
+        LaravelZero\Framework\Commands\BuildCommand::class,
+        LaravelZero\Framework\Commands\InstallCommand::class,
+        LaravelZero\Framework\Commands\MakeCommand::class,
+        LaravelZero\Framework\Commands\RenameCommand::class,
+        LaravelZero\Framework\Commands\StubPublishCommand::class,
+
+        // NunoMaduro...
+        NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
+        NunoMaduro\Collision\Adapters\Laravel\Commands\TestCommand::class,
+
+        // Symfony...
+        Symfony\Component\Console\Command\HelpCommand::class,
+
+        // Pest
+        Pest\Laravel\Commands\PestDatasetCommand::class,
+        Pest\Laravel\Commands\PestInstallCommand::class,
+        Pest\Laravel\Commands\PestTestCommand::class,
     ],
 
     /*

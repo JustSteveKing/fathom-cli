@@ -4,101 +4,34 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use PhpParser\Parser\Php7;
-use PhpParser\NodeTraverser;
-use PhpParser\Lexer\Emulative;
-use App\Support\TokenNodeVisitor;
-use App\Commands\Concerns\HasToken;
-use PhpParser\PrettyPrinter\Standard;
-use PhpParser\NodeVisitor\CloningVisitor;
-use Illuminate\Console\Scheduling\Schedule;
-use LaravelZero\Framework\Commands\Command;
+use Illuminate\Console\Command;
+use Throwable;
 
-class SetupCommand extends Command
+class SetupCommand extends FathomCommand
 {
-    use HasToken;
+    protected $signature = 'setup';
 
-    protected $signature = 'setup {--force}';
-
-    protected $description = 'Setup the Fathom CLI';
-
-    public function handle()
-    {
-        if ($this->hasToken() && ! $this->option('force')) {
-            $this->warn('You have already setup a connection for the Fathom CLI');
-
-            return 0;
-        }
-
-        $token = $this->ask('What is your Fathom API Token?');
-
-        $this->info('Setting up your configuration file ...');
-
-        $this->setup(
-            token: $token,
-        );
-    }
-
-    public function setup(string $token): void
-    {
-        $this->info('Checking Directories');
-
-        $configFile = implode(DIRECTORY_SEPARATOR, [
-            $_SERVER['HOME'] ?? $_SERVER['USERPROFILE'],
-            '.fathom',
-            'config.php',
-        ]);
-
-        if (! file_exists($configFile)) {
-            $this->info('Config file not yet created, creating ...');
-            @mkdir(dirname($configFile), 0777, true);
-            $updatedConfigFile = $this->modifyConfigurationFile(base_path('config/fathom.php'), $token);
-        } else {
-            $this->info('Config file found, modifying .....');
-            $updatedConfigFile = $this->modifyConfigurationFile($configFile, $token);
-        }
-
-        file_put_contents($configFile, $updatedConfigFile);
-
-        return;
-    }
-
-    protected function modifyConfigurationFile(string $configFile, string $token)
-    {
-        $lexer = new Emulative([
-            'usedAttributes' => [
-                'comments',
-                'startLine', 'endLine',
-                'startTokenPos', 'endTokenPos',
-            ],
-        ]);
-        $parser = new Php7($lexer);
-
-        $oldStmts = $parser->parse(file_get_contents($configFile));
-        $oldTokens = $lexer->getTokens();
-
-        $nodeTraverser = new NodeTraverser;
-        $nodeTraverser->addVisitor(new CloningVisitor());
-        $newStmts = $nodeTraverser->traverse($oldStmts);
-
-        $nodeTraverser = new NodeTraverser;
-        $nodeTraverser->addVisitor(new TokenNodeVisitor($token));
-
-        $newStmts = $nodeTraverser->traverse($newStmts);
-
-        $prettyPrinter = new Standard();
-
-        return $prettyPrinter->printFormatPreserving($newStmts, $oldStmts, $oldTokens);
-    }
+    protected $description = 'Setup the Fathom CLI using your API token.';
 
     /**
-     * Define the command's schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
-     * @return void
+     * @throws Throwable
      */
-    public function schedule(Schedule $schedule): void
+    public function handle(): int
     {
-        // $schedule->command(static::class)->everyMinute();
+        $token = $this->ask(
+            question: 'Please enter your Fathom API token',
+        );
+
+        try {
+            $this->config->set('token', $token);
+        } catch(Throwable $e) {
+            throw $e;
+        }
+
+        $this->info(
+            string: 'API Token stored successfully',
+        );
+
+        return Command::SUCCESS;
     }
 }
