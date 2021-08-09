@@ -19,7 +19,7 @@ class SetupCommand extends FathomCommand
     public function handle(): int
     {
         $token = $this->ask(
-            question: 'Please enter your Fathom API token',
+            question: '<fg=yellow>‣</> <options=bold>Please enter your API token</>',
         );
 
         try {
