@@ -7,5 +7,7 @@ it('can run the setup command', function () {
         ->expectsQuestion(
             '<fg=yellow>‣</> <options=bold>Please enter your API token</>',
             '1234',
-        )->assertExitCode(Command::SUCCESS);
+        )->assertExitCode(
+            exitCode: Command::SUCCESS,
+        );
 });
