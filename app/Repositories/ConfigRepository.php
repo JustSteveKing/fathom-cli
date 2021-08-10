@@ -11,7 +11,7 @@ final class ConfigRepository
 {
     public function __construct(
         private string $path,
-    ) {}
+    ){}
 
     public function all(): array
     {
