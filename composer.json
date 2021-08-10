@@ -19,6 +19,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.3",
         "juststeveking/laravel-transporter": "^0.7",
         "laravel-zero/framework": "^8.9"
     },
